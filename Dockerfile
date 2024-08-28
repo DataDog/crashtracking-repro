@@ -43,7 +43,7 @@ RUN set -eux; \
 	rm python.tar.xz; \
 	\
 	cd /usr/src/python; \
-	git apply --check /tmp/0001-hamt_pref_err.3.9.19.patch; \
+	patch -p1 < /tmp/0001-hamt_pref_err.3.9.19.patch; \
 	gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"; \
 	./configure \
 		--build="$gnuArch" \
