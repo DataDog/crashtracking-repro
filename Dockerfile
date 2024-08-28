@@ -27,6 +27,8 @@ RUN set -eux; \
 ENV GPG_KEY E3FF2839C048B25C084DEBE9B26995E310250568
 ENV PYTHON_VERSION 3.9.19
 
+COPY 0001-hamt_pref_err.3.9.19.patch /tmp/0001-hamt_pref_err.3.9.19.patch
+
 RUN set -eux; \
 	\
 	wget -O python.tar.xz "https://www.python.org/ftp/python/${PYTHON_VERSION%%[a-z]*}/Python-$PYTHON_VERSION.tar.xz"; \
@@ -41,6 +43,7 @@ RUN set -eux; \
 	rm python.tar.xz; \
 	\
 	cd /usr/src/python; \
+	git apply --check /tmp/0001-hamt_pref_err.3.9.19.patch; \
 	gnuArch="$(dpkg-architecture --query DEB_BUILD_GNU_TYPE)"; \
 	./configure \
 		--build="$gnuArch" \
